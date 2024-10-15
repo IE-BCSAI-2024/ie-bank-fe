@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Skull from '../components/Skull.vue'
 import AppAccounts from '../components/AppAccounts.vue'
 
+import HomePage from '../components/HomePage.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -15,6 +17,13 @@ const routes = [
     path: '/accounts',
     name: 'AppAccounts',
     component: AppAccounts
+  },
+  {
+
+    path: '/',
+    name: 'Home',
+    component: HomePage
+
   }
 ]
 
