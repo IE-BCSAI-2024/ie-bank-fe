@@ -113,8 +113,10 @@
             >
             </b-form-input>
           </b-form-group>
+
           <b-form-group
             id="form-currency-group"
+
             label="Country:"
             label-for="form-country-input"
           >
@@ -124,8 +126,10 @@
               v-model="createAccountForm.country"
               placeholder="Country"
               required
+
             >
             </b-form-input>
+
           </b-form-group>
 
           <b-button type="submit" variant="outline-info">Submit</b-button>
@@ -173,7 +177,10 @@ export default {
       createAccountForm: {
         name: "",
         currency: "",
+
         country: "",
+
+
       },
       editAccountForm: {
         id: "",
