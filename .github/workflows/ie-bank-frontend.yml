@@ -13,7 +13,6 @@ env:
 jobs:
   build-dev:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
       - name: Set up Node.js version
@@ -21,17 +20,15 @@ jobs:
         with:
           node-version: '18.x'
           cache: 'npm'
-
       - name: npm install, build, and test (Development)
         run: |
           npm install
-          npm run build:dev ## This command will build the Vue.js app using .env.development variables
-
+          npm run build:dev ## Ensure this builds to ⁠ dist/ ⁠
       - name: Upload artifact for deployment job (Development)
         uses: actions/upload-artifact@v4
         with:
           name: node-app-dev
-          path: dist-dev/
+          path: dist/  # Specify the correct output path
 
   deploy-dev:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
@@ -40,24 +37,21 @@ jobs:
     environment:
       name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
     steps:
       - name: Download artifact from build-dev job
         uses: actions/download-artifact@v4
         with:
           name: node-app-dev
-          path: dist-dev/
-
+          path: ./build  # Download to a specific directory
       - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: 'Deploy to Azure Web App - Development'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.FRONTEND_WEBAPP_DEV }}
-          package: .
+          package: ./build  # Point to the correct directory
 
   build-uat:
     runs-on: ubuntu-latest
@@ -68,40 +62,35 @@ jobs:
         with:
           node-version: '18.x'
           cache: 'npm'
-
       - name: npm install, build, and test (UAT)
         run: |
           npm install
-          npm run build:uat ## This command will build the Vue.js app using .env.uat variables
-
+          npm run build:uat ## Ensure this builds to ⁠ dist/ ⁠
       - name: Upload artifact for deployment job (UAT)
         uses: actions/upload-artifact@v4
         with:
           name: node-app-uat
-          path: dist-uat/
+          path: dist/  # Specify the correct output path
 
   deploy-uat:
     if: github.event.pull_request.base.ref == 'main' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    needs: [build-uat, deploy-dev]
+    needs: build-uat
     environment:
       name: 'UAT'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
     steps:
       - name: Download artifact from build-uat job
         uses: actions/download-artifact@v4
         with:
           name: node-app-uat
-          path: dist-uat/
-
+          path: ./build  # Download to a specific directory
       - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: 'Deploy to Azure Web App - UAT'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.FRONTEND_WEBAPP_UAT }}
-          package: .
+          package: ./build  # Point to the correct directory
