@@ -1,19 +1,24 @@
 <template>
   <div class="homepage">
-    <div class="header">
-      <h1>Welcome to IE Bank</h1>
-      <p>Your trusted partner for financial success.</p>
-    </div>
-    <div class="links">
-      <router-link to="/accounts" class="link-button">View Accounts</router-link>
-      <router-link to="/skull" class="link-button">Learn More</router-link>
-    </div>
+    <!-- IE Bank Logo (optional, add if you have one) -->
+  
+    <!-- Welcome Text -->
+    <h1>Welcome to IE Bank</h1>
+    <p>Secure and Trusted Banking Solutions</p>
+    
+    <!-- View Accounts Button -->
+    <button @click="viewAccounts">View Accounts</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "HomePage",
+  methods: {
+    viewAccounts() {
+      // Logic to navigate to the accounts page or handle the button click
+      this.$router.push('/accounts');
+    }
+  }
 };
 </script>
 
@@ -22,45 +27,38 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  min-height: 100vh;
-  padding: 20px;
-  background-color: #f5f7fa;
-}
-
-.header {
+  justify-content: center;
+  height: 100vh;
   text-align: center;
+  background-color: #f7f8fa; /* Slightly lighter background */
+  padding: 20px;
 }
 
 h1 {
-  font-size: 64px;
-  background: linear-gradient(to right, #0648d7, #2ea901);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #003366; /* Deep blue color for heading */
+  font-size: 3rem;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 p {
-  font-size: 18px;
-  color: #333;
+  font-size: 1.4rem;
+  color: #333; /* Darker color for text */
+  margin-bottom: 40px;
 }
 
-.links {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.link-button {
-  padding: 10px 20px;
-  background-color: #0648d7;
+button {
+  padding: 12px 25px;
+  background-color: #00509e; /* Darker blue background for button */
   color: white;
-  text-decoration: none;
+  border: none;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition */
 }
 
-.link-button:hover {
-  background-color: #2ea901;
+button:hover {
+  background-color: #0066cc; /* Slightly lighter blue on hover */
 }
 </style>
