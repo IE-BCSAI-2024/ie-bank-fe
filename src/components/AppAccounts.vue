@@ -322,3 +322,4 @@ export default {
     this.RESTgetAccounts();
   },
 };
+</script>
