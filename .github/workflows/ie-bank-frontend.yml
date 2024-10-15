@@ -7,8 +7,10 @@ on:
   workflow_dispatch:
 
 env:
+
   FRONTEND_WEBAPP_DEV: troca-fe-dev
   FRONTEND_WEBAPP_UAT: troca-fe-uat
+
 
 jobs:
   build-dev:
@@ -23,8 +25,10 @@ jobs:
       - name: npm install, build, and test (Development)
         run: |
           npm install
-          npm run build:dev ## Ensure this builds to ⁠ dist/ ⁠
+
+          npm run build:dev 
       - name: Upload artifact for deployment job (Development)
+
         uses: actions/upload-artifact@v4
         with:
           name: node-app-dev
@@ -38,11 +42,13 @@ jobs:
       name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     steps:
+
       - name: Download artifact from build-dev job
         uses: actions/download-artifact@v4
         with:
           name: node-app-dev
           path: ./build  # Download to a specific directory
+
       - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
