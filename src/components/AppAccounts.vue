@@ -26,6 +26,7 @@
                 <th scope="col">Account Name</th>
                 <th scope="col">Account Number</th>
                 <th scope="col">Account Balance</th>
+                <th scope="col">Account Country</th>
                 <th scope="col">Account Currency</th>
                 <th scope="col">Account Status</th>
                 <th scope="col">Actions</th>
@@ -36,6 +37,7 @@
                 <td>{{ account.name }}</td>
                 <td>{{ account.account_number }}</td>
                 <td>{{ account.balance }}</td>
+                <td>{{ account.country }}</td>
                 <td>{{ account.currency }}</td>
                 <td>
                   <span
@@ -111,6 +113,21 @@
             </b-form-input>
           </b-form-group>
 
+          <!-- Country -->
+          <b-form-group
+            id="form-country-group"
+            label="Country:"
+            label-for="form-country-input"
+          >
+            <b-form-input
+              id="form-country-input"
+              type="text"
+              v-model="createAccountForm.country"
+              placeholder="Country"
+              required
+            ></b-form-input>
+          </b-form-group>
+
           <b-button type="submit" variant="outline-info">Submit</b-button>
         </b-form>
       </b-modal>
@@ -156,6 +173,7 @@ export default {
       createAccountForm: {
         name: "",
         currency: "",
+        country: "",
       },
       editAccountForm: {
         id: "",
@@ -188,7 +206,7 @@ export default {
       const path = `${process.env.VUE_APP_ROOT_URL}/accounts`;
       axios
         .post(path, payload)
-        .then((response) => {
+        .then(() => {
           this.RESTgetAccounts();
           // For message alert
           this.message = "Account Created succesfully!";
@@ -210,7 +228,7 @@ export default {
       const path = `${process.env.VUE_APP_ROOT_URL}/accounts/${accountId}`;
       axios
         .put(path, payload)
-        .then((response) => {
+        .then(() => {
           this.RESTgetAccounts();
           // For message alert
           this.message = "Account Updated succesfully!";
@@ -232,7 +250,7 @@ export default {
       const path = `${process.env.VUE_APP_ROOT_URL}/accounts/${accountId}`;
       axios
         .delete(path)
-        .then((response) => {
+        .then(() => {
           this.RESTgetAccounts();
           // For message alert
           this.message = "Account Deleted succesfully!";
@@ -259,6 +277,7 @@ export default {
       this.createAccountForm.currency = "";
       this.editAccountForm.id = "";
       this.editAccountForm.name = "";
+      this.createAccountForm.country = "";
     },
 
     // Handle submit event for create account
@@ -268,6 +287,7 @@ export default {
       const payload = {
         name: this.createAccountForm.name,
         currency: this.createAccountForm.currency,
+        country: this.createAccountForm.country,
       };
       this.RESTcreateAccount(payload);
       this.initForm();
