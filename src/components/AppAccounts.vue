@@ -6,7 +6,7 @@
           <h1>Accounts</h1>
           <hr />
           <br />
-          <!-- Allert Message -->
+          <!-- Alert Message -->
           <b-alert v-if="showMessage" variant="success" show>{{
             message
           }}</b-alert>
@@ -27,8 +27,10 @@
                 <th scope="col">Account Number</th>
                 <th scope="col">Account Balance</th>
                 <th scope="col">Account Currency</th>
+                <th scope="col">Country</th>
                 <th scope="col">Account Status</th>
                 <th scope="col">Actions</th>
+
               </tr>
             </thead>
             <tbody>
@@ -37,6 +39,7 @@
                 <td>{{ account.account_number }}</td>
                 <td>{{ account.balance }}</td>
                 <td>{{ account.currency }}</td>
+                <td>{{ account.country }}</td>
                 <td>
                   <span
                     v-if="account.status == 'Active'"
@@ -110,9 +113,10 @@
             >
             </b-form-input>
           </b-form-group>
-              <!-- Country Input Field (Newly Added) -->
+
           <b-form-group
-            id="form-country-group"
+            id="form-currency-group"
+
             label="Country:"
             label-for="form-country-input"
           >
@@ -122,7 +126,10 @@
               v-model="createAccountForm.country"
               placeholder="Country"
               required
-            ></b-form-input>
+
+            >
+            </b-form-input>
+
           </b-form-group>
 
           <b-button type="submit" variant="outline-info">Submit</b-button>
@@ -170,7 +177,10 @@ export default {
       createAccountForm: {
         name: "",
         currency: "",
-        country: "", // Added country field
+
+        country: "",
+
+
       },
       editAccountForm: {
         id: "",
@@ -272,6 +282,7 @@ export default {
     initForm() {
       this.createAccountForm.name = "";
       this.createAccountForm.currency = "";
+      this.createAccountForm.country = "";
       this.editAccountForm.id = "";
       this.editAccountForm.name = "";
     },
