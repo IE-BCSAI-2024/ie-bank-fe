@@ -1,0 +1,22 @@
+FROM node:lts-alpine
+
+ARG MODE
+
+# Install a simple HTTP server for serving static content
+RUN npm install -g http-server
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json and install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy the remaining project files
+COPY . .
+
+# Build the app
+RUN npm run build -- --mode $MODE
+
+EXPOSE 8080
+CMD ["http-server", "dist"]
